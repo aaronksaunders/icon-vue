@@ -1,5 +1,11 @@
 # VueJS Hello World w/Ionic4
 
+## Overview
+Simple application showing the latest of using ionic framework webcomponents with vuejs
+
+- vue-router
+- vuex
+
 ## Project setup
 ```
 npm install
