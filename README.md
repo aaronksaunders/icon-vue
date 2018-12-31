@@ -6,6 +6,9 @@ Simple application showing the latest of using ionic framework webcomponents wit
 - vue-router
 - vuex
 
+Ionic v4 Documentation
+- https://beta.ionicframework.com/docs/
+
 ## Project setup
 ```
 npm install
