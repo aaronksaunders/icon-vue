@@ -1,4 +1,4 @@
-# vuehw-ionic4
+# VueJS Hello World w/Ionic4
 
 ## Project setup
 ```
