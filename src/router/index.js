@@ -1,10 +1,12 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import store from '../store';
+import store from "../store";
 
 Vue.use(VueRouter);
 
 const privateRoute = (to, from, next) => {
+  debugger;
+  console.log("isAuthenticated:" + store.state.user.isAuthenticated);
   if (!store.state.user.isAuthenticated) {
     next({ name: "login" });
   } else {
@@ -13,8 +15,8 @@ const privateRoute = (to, from, next) => {
 };
 
 export default new VueRouter({
-  //mode: 'history',
-  base: process.env.BASE_URL,
+  // mode: "history",
+  // base: process.env.BASE_URL,
   routes: [
     {
       path: "/login",
@@ -31,7 +33,7 @@ export default new VueRouter({
       //beforeEnter: privateRoute
     },
     {
-      path: "/",
+      path: "/home",
       name: "home",
       component: () =>
         import(/* webpackChunkName: "home" */ "@/components/Home.vue"),

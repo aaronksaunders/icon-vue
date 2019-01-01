@@ -1,5 +1,5 @@
 <template>
-  <div  class="ion-page">
+  <div class="ion-page">
     <ion-header>
       <ion-toolbar color="primary">
         <ion-title>Ionic4 VueJS: Home</ion-title>
@@ -12,12 +12,12 @@
 </template>
 
 <script>
-export default {
-  name: "Home",
-  props: {
-    msg: String
-  }
-};
+  export default {
+    name: "Home",
+    props: {
+      msg: String
+    }
+  };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

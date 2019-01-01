@@ -24,17 +24,17 @@ export default {
     },
 
     userLoginRequest(state, payload) {
-      this.isAuthenticated = false;
-      this.loading = true;
-      this.error = null;
+      state.isAuthenticated = false;
+      state.loading = true;
+      state.error = null;
     },
 
     userLoginSuccess(state, payload) {
       console.log(payload);
 
-      this.isAuthenticated = true;
-      this.loading = false;
-      this.error = null;
+      state.isAuthenticated = true;
+      state.loading = false;
+      state.error = null;
     },
 
     // USER LOGIN
@@ -43,17 +43,17 @@ export default {
     },
 
     createAccountRequest(state, payload) {
-      this.isAuthenticated = false;
-      this.loading = true;
-      this.error = null;
+      state.isAuthenticated = false;
+      state.loading = true;
+      state.error = null;
     },
 
     createAccountSuccess(state, payload) {
       console.log(payload);
 
-      this.isAuthenticated = true;
-      this.loading = false;
-      this.error = null;
+      state.isAuthenticated = true;
+      state.loading = false;
+      state.error = null;
     }
   },
   actions: {

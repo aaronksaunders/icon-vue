@@ -88,27 +88,20 @@
       // get actions and getters from vuex state model
       ...mapActions("user", ["userLogin"]),
       ...mapGetters("user", ["authError"]),
-      
+
       // methods for this component
-      doLogin() {
-        //console.log(this.credentials);
-        this.userLogin(this.credentials)
-          .then(
-            user => {
-              if (user === false) {
-                console.log(this.authError().err.message);
-                this.presentToastWithOptions(this.authError().err.message);
-              } else {
-                this.presentToastWithOptions("Logged In Successfully");
-              }
-            },
-            e => {
-              console.log(e);
-            }
-          )
-          .catch(e => {
-            console.log("catch " + e);
-          });
+      async doLogin() {
+        try {
+          let user = await this.userLogin(this.credentials);
+
+          if (user === false) {
+            console.log(this.authError().err.message);
+            this.presentToastWithOptions(this.authError().err.message);
+          } else {
+            this.presentToastWithOptions("Logged In Successfully");
+            this.$router.push("home");
+          }
+        } catch (e) {}
       },
       doCreateAccount() {
         //console.log(this.credentials);
