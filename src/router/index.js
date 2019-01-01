@@ -24,6 +24,13 @@ export default new VueRouter({
       //beforeEnter: privateRoute
     },
     {
+      path: "/create-account",
+      name: "create-account",
+      component: () =>
+        import(/* webpackChunkName: "create-account" */ "@/components/CreateAccount.vue")
+      //beforeEnter: privateRoute
+    },
+    {
       path: "/",
       name: "home",
       component: () =>
