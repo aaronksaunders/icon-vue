@@ -49,6 +49,12 @@ export default new VueRouter({
       component: () =>
         import(/* webpackChunkName: "about" */ "@/components/About.vue"),
       props: true
+    },
+    {
+      path: "*",
+      name: "NotFound",
+      component: () =>
+        import(/* webpackChunkName: "notFound" */ "@/components/NotFound.vue"),
     }
   ]
 });
