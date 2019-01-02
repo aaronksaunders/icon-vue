@@ -5,6 +5,8 @@ Simple application showing the latest of using ionic framework webcomponents wit
 
 - vue-router
 - vuex
+- VeeValidate
+- @ionic/vue
 
 Ionic v4 Documentation
 - https://beta.ionicframework.com/docs/
