@@ -24,37 +24,46 @@
               color="primary"
             >Username</ion-label>
             <ion-input
+              v-validate="'email|required'"
+              data-vv-as="email"
               @input="credentials.email = $event.target.value"
               :value="credentials.email"
               name="username"
               type="text"
               spellcheck="false"
               autocapitalize="off"
-              required
             >
             </ion-input>
           </ion-item>
-
+          <span
+            v-show="errors.has('username')"
+            class="help is-danger"
+          >{{ errors.first('username') }}</span>
           <ion-item>
             <ion-label
               position="stacked"
               color="primary"
             >Password</ion-label>
             <ion-input
+              v-validate="{min:5, max:11, required:true}"
+              data-vv-as="field"
               @input="credentials.password = $event.target.value"
               :value="credentials.password"
               name="password"
               type="password"
-              required
             >
             </ion-input>
           </ion-item>
-
+          <span
+            v-show="errors.has('password')"
+            class="help is-danger"
+          >{{ errors.first('password') }}</span>
         </ion-list>
 
         <ion-row responsive-sm>
           <ion-col>
             <ion-button
+              :disabled="errors.items.length !== 0 || this.isFormPristine"
               @click="doLogin()"
               expand="block"
             >Login</ion-button>
@@ -79,9 +88,18 @@
     props: {
       msg: String
     },
+    computed: {
+      isFormDirty() {
+        return Object.keys(this.fields).some(key => this.fields[key].dirty);
+      },
+
+      isFormPristine() {
+        return Object.keys(this.fields).some(key => this.fields[key].pristine);
+      }
+    },
     data() {
       return {
-        credentials: { email: "", password: "" }
+        credentials: {}
       };
     },
     methods: {
@@ -120,5 +138,16 @@
     }
   };
 </script>
+<style scoped>
+  .help.is-danger {
+    color: #ff3860;
+  }
+  .help {
+    display: block;
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+  }
+</style>
+
   
 
