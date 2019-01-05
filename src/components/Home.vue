@@ -49,7 +49,7 @@
         </ion-card>
       </ion-row>
       <ion-button @click="$router.push('home-detail')">About</ion-button>
-      <!-- <ion-button @click="openStart">Open Start Menu</ion-button> -->
+      <ion-button @click="openModal">Open Start Menu</ion-button>
       <ion-list>
         <ion-item
           v-for="item in items"
@@ -68,6 +68,8 @@
 
 <script>
   import { members } from "../assets/truck";
+  import SimpleModal from "./modals/SimpleModal.vue";
+
   export default {
     name: "Home",
     props: {
@@ -80,11 +82,13 @@
       };
     },
     methods: {
-      openStart() {
-        document.querySelector("ion-menu-controller").open("start");
-      },
-      openEnd() {
-        document.querySelector("ion-menu-controller").open("end");
+      openModal() {
+        this.$ionic.modalController
+          .create({
+            component: SimpleModal,
+            componentProps: { title: "Teste", anotherProp : new Date() + ""}
+          })
+          .then(m => m.present());
       }
     },
     // LIFECYCLE FUNCTIONS
