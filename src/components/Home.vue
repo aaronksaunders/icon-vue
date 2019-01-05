@@ -1,7 +1,20 @@
 <template>
-  <div class="ion-page">
+  <div
+    class="ion-page"
+    main
+  >
     <ion-header>
       <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+          <ion-menu-toggle>
+            <ion-button>
+              <ion-icon
+                slot="icon-only"
+                name="menu"
+              ></ion-icon>
+            </ion-button>
+          </ion-menu-toggle>
+        </ion-buttons>
         <ion-title>Ionic4 VueJS: Food Truck Saver</ion-title>
       </ion-toolbar>
     </ion-header>
@@ -24,15 +37,19 @@
       </ion-row>
       <ion-row>
         <ion-card style='height: 300px; width:100%;padding: 0px'>
-          <ion-card-content item-content style='padding: 0px'>
-          <div
-            id='map'
-            style='height: 300px; width:100%; padding: 0px'
-          ></div>
+          <ion-card-content
+            item-content
+            style='padding: 0px'
+          >
+            <div
+              id='map'
+              style='height: 300px; width:100%; padding: 0px'
+            ></div>
           </ion-card-content>
         </ion-card>
       </ion-row>
-      <ion-button @click="$router.push('about')">About</ion-button>
+      <ion-button @click="$router.push('home-detail')">About</ion-button>
+      <!-- <ion-button @click="openStart">Open Start Menu</ion-button> -->
       <ion-list>
         <ion-item
           v-for="item in items"
@@ -61,6 +78,14 @@
         credentials: {},
         items: members
       };
+    },
+    methods: {
+      openStart() {
+        document.querySelector("ion-menu-controller").open("start");
+      },
+      openEnd() {
+        document.querySelector("ion-menu-controller").open("end");
+      }
     },
     // LIFECYCLE FUNCTIONS
     mounted: async function() {

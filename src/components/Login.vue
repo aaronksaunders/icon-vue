@@ -76,12 +76,7 @@
             >Create Account</ion-button>
           </ion-col>
         </ion-row>
-        <ion-row>
-          <div
-            id='map'
-            style='height: 300px; width:100%;'
-          ></div>
-        </ion-row>
+
       </form>
     </ion-content>
   </div>
@@ -144,23 +139,6 @@
     },
     // LIFECYCLE FUNCTIONS
     mounted: async function() {
-      mapboxgl.accessToken =
-        "pk.eyJ1IjoiYWFyb25rc2F1bmRlcnMiLCJhIjoiY2pxaXhyZjVrMTFoODQ5bDJ0eG96MHFmayJ9.Lgkvv2h6iVQAOBWIXTHhGQ";
-      var map = new mapboxgl.Map({
-        container: "map",
-        style: "mapbox://styles/mapbox/streets-v9",
-        center: [-96, 37.8], // starting position
-        zoom: 3 // starting zoom
-      });
-
-      map.addControl(
-        new mapboxgl.GeolocateControl({
-          positionOptions: {
-            enableHighAccuracy: true
-          },
-          trackUserLocation: true
-        })
-      );
     }
   };
 </script>
