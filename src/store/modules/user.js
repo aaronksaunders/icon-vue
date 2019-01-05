@@ -3,12 +3,18 @@
 import firebase from "firebase";
 export default {
   namespaced: true,
+  //
+  // STATE
+  //
   state: {
     isAuthenticated: false,
     loading: false,
     error: null,
     user: null
   },
+  //
+  // MUTATIONS
+  //
   mutations: {
     setLoading(state, payload) {
       state.loading = payload;
@@ -56,7 +62,15 @@ export default {
       state.error = null;
     }
   },
+  //
+  // ACTIONS
+  //
   actions: {
+    /**
+     *
+     * @param {*} param0
+     * @param {*} payload
+     */
     userLogin({ commit }, payload) {
       commit("setLoading", true);
       commit("authError", {
@@ -73,14 +87,19 @@ export default {
         .then(user => {
           // when successful...
           commit("userLoginSuccess", payload);
-          return true
+          return true;
         })
         .catch(err => {
           console.log(err);
           commit("authError", { err });
-          return false
+          return false;
         });
     },
+    /**
+     *
+     * @param {*} param0
+     * @param {*} payload
+     */
     createAccount({ commit }, payload) {
       commit("setLoading", true);
       commit("authError", {
@@ -92,15 +111,28 @@ export default {
         commit("createAccountRequest", payload);
 
         // MAKE API CALL
-
-        // when successful...
-        commit("createAccountSuccess", payload);
+        return firebase
+          .auth()
+          .createUserWithEmailAndPassword(payload.email, payload.password)
+          .then(user => {
+            // when successful...
+            commit("createAccountSuccess", payload);
+            return true;
+          })
+          .catch(err => {
+            console.log(err);
+            commit("authError", { err });
+            return false;
+          });
       } catch (e) {
         console.log(e);
         commit("authError", { e });
       }
     }
   },
+  //
+  // GETTERS
+  //
   getters: {
     loggedIn: state => {
       return state.user ? true : false;
