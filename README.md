@@ -1,7 +1,7 @@
 # VueJS Hello World w/Ionic4
 
 ## Overview
-Simple application showing the latest use of using ionic framework webcomponents with vuejs
+Simple application showing the latest use of using ionic framework webcomponents with vuejs. Will be presenting at our local meetup here in DC -> https://www.meetup.com/The-Washington-Ionic-Framework-Meetup/events/257297176/
 
 - vue-router
 - vuex
