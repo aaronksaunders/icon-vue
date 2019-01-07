@@ -13,18 +13,18 @@
 <style src='@ionic/core/css/ionic.bundle.css'></style>
 
 <script>
-  import MenuLeft from "./components/menus/MenuLeft";
-  export default {
-    name: "app",
-    components: { MenuLeft }
-  };
+import MenuLeft from "./components/menus/MenuLeft";
+export default {
+  name: "app",
+  components: { MenuLeft }
+};
 </script>
 
 
 <style>
-  #app {
-    /* font-family: 'Avenir', Helvetica, Arial, sans-serif;
+#app {
+  /* font-family: 'Avenir', Helvetica, Arial, sans-serif;
               -webkit-font-smoothing: antialiased;
               -moz-osx-font-smoothing: grayscale; */
-  }
+}
 </style>

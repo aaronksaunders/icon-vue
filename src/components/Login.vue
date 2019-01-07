@@ -83,74 +83,73 @@
 </template>
 
 <script>
-  import { mapActions, mapGetters } from "vuex";
-  export default {
-    name: "Login",
-    props: {
-      msg: String
+import { mapActions, mapGetters } from "vuex";
+export default {
+  name: "Login",
+  props: {
+    msg: String
+  },
+  computed: {
+    ...mapGetters("user", ["authError"]),
+    isFormDirty() {
+      return Object.keys(this.fields).some(key => this.fields[key].dirty);
     },
-    computed: {
-      isFormDirty() {
-        return Object.keys(this.fields).some(key => this.fields[key].dirty);
-      },
 
-      isFormPristine() {
-        return Object.keys(this.fields).some(key => this.fields[key].pristine);
-      }
-    },
-    data() {
-      return {
-        credentials: {}
-      };
-    },
-    methods: {
-      // get actions and getters from vuex state model
-      ...mapActions("user", ["userLogin"]),
-      ...mapGetters("user", ["authError"]),
-
-      // methods for this component
-      async doLogin() {
-        try {
-          let user = await this.userLogin(this.credentials);
-
-          if (user === false) {
-            console.log(this.authError().err.message);
-            this.presentToastWithOptions(this.authError().err.message);
-          } else {
-            this.presentToastWithOptions("Logged In Successfully");
-            this.$router.push("home");
-          }
-        } catch (e) {}
-      },
-      doCreateAccount() {
-        //console.log(this.credentials);
-        this.$router.push("create-account");
-      },
-      async presentToastWithOptions(_message) {
-        const toast = await this.$ionic.toastController.create({
-          message: _message,
-          showCloseButton: true,
-          position: "bottom",
-          closeButtonText: "Done",
-          duration: 2000
-        });
-        return await toast.present();
-      }
-    },
-    // LIFECYCLE FUNCTIONS
-    mounted: async function() {
+    isFormPristine() {
+      return Object.keys(this.fields).some(key => this.fields[key].pristine);
     }
-  };
+  },
+  data() {
+    return {
+      credentials: {}
+    };
+  },
+  methods: {
+    // get actions and getters from vuex state model
+    ...mapActions("user", ["userLogin"]),
+
+    // methods for this component
+    async doLogin() {
+      try {
+        let user = await this.userLogin(this.credentials);
+
+        if (user === false) {
+          console.log(this.authError().err.message);
+          this.presentToastWithOptions(this.authError().err.message);
+        } else {
+          this.presentToastWithOptions("Logged In Successfully");
+          this.$router.push("home");
+        }
+      } catch (e) {}
+    },
+    doCreateAccount() {
+      //console.log(this.credentials);
+      this.$router.push("create-account");
+    },
+    async presentToastWithOptions(_message) {
+      const toast = await this.$ionic.toastController.create({
+        message: _message,
+        showCloseButton: true,
+        position: "bottom",
+        closeButtonText: "Done",
+        duration: 2000
+      });
+      return await toast.present();
+    }
+  },
+  // LIFECYCLE FUNCTIONS
+  mounted: async function() {}
+};
 </script>
 <style scoped>
-  .help.is-danger {
-    color: #ff3860;
-  }
-  .help {
-    display: block;
-    font-size: 0.75rem;
-    margin-top: 0.25rem;
-  }
+.help.is-danger {
+  color: #ff3860;
+}
+.help {
+  display: block;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+}
 </style>
 
   
