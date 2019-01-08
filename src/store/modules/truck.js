@@ -12,7 +12,7 @@ export default {
     loading: false,
     error: null,
     trucks: [],
-    currentTruck : null
+    currentTruck: null
   },
   //
   // MUTATIONS
@@ -37,21 +37,30 @@ export default {
 
       state.loading = false;
       state.error = null;
-      state.trucks = payload
+      state.trucks = payload;
     },
 
+    setCurrentTruck(state, payload) {
+      state.currentTruck = payload;
+    },
+
+    clearCurrentTruck(state, payload) {
+      state.currentTruck = null;
+    }
   },
   //
   // ACTIONS
   //
   actions: {
+    setCurrentTruck({ commit }, payload) {
+      commit("setCurrentTruck", payload);
+    },
     /**
      *
      * @param {*} param0
      * @param {*} payload
      */
     fetchData({ commit }, payload) {
-
       commit("setLoading", true);
       commit("authError", {
         error: null
@@ -62,24 +71,22 @@ export default {
 
       // MAKE API CALL
 
-      return new Promise((resolve) => {
-        let allTrucks = members
+      return new Promise(resolve => {
+        let allTrucks = members;
         commit("fetchDataSuccess", allTrucks);
         resolve(true);
-      })
-
-    },
- 
+      });
+    }
   },
   //
   // GETTERS
   //
   getters: {
-    currentTruck : state => {
-      return state.currentTruck
+    currentTruck: state => {
+      return state.currentTruck;
     },
     allTrucks: state => {
-      return state.trucks || []
+      return state.trucks || [];
     },
     authError: state => {
       return state.error;
