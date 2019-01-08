@@ -54,7 +54,7 @@
       async openModal() {
         let modal = await this.$ionic.modalController.create({
           component: SimpleModal,
-          componentProps: { title: "Teste", anotherProp: new Date() + "" }
+          componentProps: {  }
         });
 
         // show the modal
