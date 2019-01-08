@@ -48,12 +48,13 @@
           </ion-card-content>
         </ion-card>
       </ion-row>
-      <ion-button @click="$router.push('home-detail')">About</ion-button>
-      <ion-button @click="openModal">Open Start Menu</ion-button>
+
+
       <ion-list>
         <ion-item
           v-for="item in allTrucks"
           :key="item.id"
+          @click="showTruckDetail(item)"
         >
           <ion-label>
             <h2 v-html="item.c2[0].value"></h2>
@@ -67,61 +68,56 @@
 </template>
 
 <script>
-import SimpleModal from "./modals/SimpleModal.vue";
-import { mapActions, mapGetters } from "vuex";
 
-export default {
-  name: "Home",
-  props: {
-    msg: String
-  },
-  computed: {
-    ...mapGetters("truck", ["authError", "allTrucks"])
-  },
-  data() {
-    return {
-      credentials: {}
-      // items: this.$state.truck.trucks
-    };
-  },
-  methods: {
-    // get actions and getters from vuex state model
-    ...mapActions("truck", ["fetchData"]),
+  import { mapActions, mapGetters } from "vuex";
 
-    openModal() {
-      this.$ionic.modalController
-        .create({
-          component: SimpleModal,
-          componentProps: { title: "Teste", anotherProp: new Date() + "" }
+  export default {
+    name: "Home",
+    props: {
+      msg: String
+    },
+    computed: {
+      ...mapGetters("truck", ["authError", "allTrucks"])
+    },
+    data() {
+      return {
+        credentials: {}
+        // items: this.$state.truck.trucks
+      };
+    },
+    methods: {
+      // get actions and getters from vuex state model
+      ...mapActions("truck", ["fetchData", "setCurrentTruck"]),
+      showTruckDetail(_item) {
+        this.setCurrentTruck(_item);
+        this.$router.push("home-detail");
+      }
+    },
+    // LIFECYCLE FUNCTIONS
+
+    created() {
+      this.$store.dispatch("truck/fetchData");
+    },
+    mounted: async function() {
+      mapboxgl.accessToken =
+        "pk.eyJ1IjoiYWFyb25rc2F1bmRlcnMiLCJhIjoiY2pxaXhyZjVrMTFoODQ5bDJ0eG96MHFmayJ9.Lgkvv2h6iVQAOBWIXTHhGQ";
+      var map = new mapboxgl.Map({
+        container: "map",
+        style: "mapbox://styles/mapbox/streets-v9",
+        center: [-96, 37.8], // starting position
+        zoom: 3 // starting zoom
+      });
+
+      map.addControl(
+        new mapboxgl.GeolocateControl({
+          positionOptions: {
+            enableHighAccuracy: true
+          },
+          trackUserLocation: true
         })
-        .then(m => m.present());
+      );
     }
-  },
-  // LIFECYCLE FUNCTIONS
-
-  created() {
-    this.$store.dispatch("truck/fetchData");
-  },
-  mounted: async function() {
-    mapboxgl.accessToken =
-      "pk.eyJ1IjoiYWFyb25rc2F1bmRlcnMiLCJhIjoiY2pxaXhyZjVrMTFoODQ5bDJ0eG96MHFmayJ9.Lgkvv2h6iVQAOBWIXTHhGQ";
-    var map = new mapboxgl.Map({
-      container: "map",
-      style: "mapbox://styles/mapbox/streets-v9",
-      center: [-96, 37.8], // starting position
-      zoom: 3 // starting zoom
-    });
-
-    map.addControl(
-      new mapboxgl.GeolocateControl({
-        positionOptions: {
-          enableHighAccuracy: true
-        },
-        trackUserLocation: true
-      })
-    );
-  }
-};
+  };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

@@ -46,6 +46,16 @@ export default {
 
     clearCurrentTruck(state, payload) {
       state.currentTruck = null;
+    },
+
+    updateTruckNotes(state, payload) {
+      let t = state.trucks.map((item, index) => {
+        if (item.c1[0].value === payload.id) {
+          item.notes = [...payload.newNotes];
+          state.trucks[index] = { ...item };
+          state.currentTruck = state.trucks[index];
+        }
+      });
     }
   },
   //
@@ -54,6 +64,14 @@ export default {
   actions: {
     setCurrentTruck({ commit }, payload) {
       commit("setCurrentTruck", payload);
+    },
+    addTruckNote({ commit, state }, payload) {
+      debugger
+      let id = state.currentTruck.c1[0].value;
+      let t = state.currentTruck;
+      t.notes = t.notes || [];
+      let newNotes = t.notes.concat(payload);
+      commit("updateTruckNotes", { id, newNotes });
     },
     /**
      *
