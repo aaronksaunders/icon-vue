@@ -22,6 +22,7 @@ export default {
 
     authError(state, payload) {
       state.error = payload;
+      state.user = null;
     },
 
     // USER LOGIN
@@ -66,6 +67,37 @@ export default {
   // ACTIONS
   //
   actions: {
+    doAuthCheck({ commit }, payload) {
+      return new Promise((resolve, reject) => {
+        // Setup Firebase onAuthStateChanged handler
+        // https://firebase.google.com/docs/reference/js/firebase.auth.Auth#onAuthStateChanged
+        firebase.auth().onAuthStateChanged(user => {
+          debugger;
+          if (user) {
+            const newUser = {
+              id: user.uid,
+              name: user.displayName,
+              email: user.email,
+              photoUrl: user.photoURL
+            };
+            commit("userLoginSuccess", {
+              isLoggedIn: true
+            });
+            resolve(newUser);
+          } else {
+            commit("authError", null);
+            commit("authChecked", {
+              authChecked: true
+            });
+            resolve(null);
+          }
+        });
+      }).catch(cc => {
+        console.log(cc);
+        commit("authError", cc);
+      });
+    },
+
     /**
      *
      * @param {*} param0

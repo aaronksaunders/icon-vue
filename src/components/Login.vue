@@ -22,7 +22,7 @@
             <ion-label
               position="stacked"
               color="primary"
-            >Username</ion-label>
+            >email</ion-label>
             <ion-input
               v-validate="'email|required'"
               data-vv-as="email"
@@ -65,91 +65,177 @@
             <ion-button
               :disabled="errors.items.length !== 0 || this.isFormPristine"
               @click="doLogin()"
-              expand="block"
+              expand="full"
             >Login</ion-button>
-          </ion-col>
-          <ion-col>
+
             <ion-button
               @click="doCreateAccount()"
               color="light"
-              expand="block"
+              expand="full"
             >Create Account</ion-button>
           </ion-col>
         </ion-row>
-
+        <ion-row>
+          <ion-label style="text-align: center;">OR</ion-label>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-button
+              @click="doSocialMediaLogin('facebook')"
+              color="light"
+              expand="full"
+            >
+              <ion-icon
+                name="logo-facebook"
+                style="font-size:32px"
+              ></ion-icon>
+            </ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button
+              @click="doSocialMediaLogin('instagram')"
+              color="light"
+              expand="full"
+            >
+              <ion-icon
+                name="logo-instagram"
+                style="font-size:32px"
+              ></ion-icon>
+            </ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button
+              @click="doSocialMediaLogin('twitter')"
+              color="light"
+              expand="full"
+            >
+              <ion-icon
+                name="logo-twitter"
+                style="font-size:32px"
+              ></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
       </form>
     </ion-content>
+    <ion-footer>
+      <ion-row>
+        <ion-col>
+          <ion-button
+            size="small"
+            @click="openModal()"
+            color="light"
+            expand="full"
+          >Forgot Password</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-footer>
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
-export default {
-  name: "Login",
-  props: {
-    msg: String
-  },
-  computed: {
-    ...mapGetters("user", ["authError"]),
-    isFormDirty() {
-      return Object.keys(this.fields).some(key => this.fields[key].dirty);
+  import { mapActions, mapGetters } from "vuex";
+  import ForgotPasswordModal from "../components/modals/ForgotPasswordModal.vue";
+  export default {
+    name: "Login",
+    props: {
+      msg: String
     },
+    computed: {
+      ...mapGetters("user", ["authError"]),
+      isFormDirty() {
+        return Object.keys(this.fields).some(key => this.fields[key].dirty);
+      },
 
-    isFormPristine() {
-      return Object.keys(this.fields).some(key => this.fields[key].pristine);
-    }
-  },
-  data() {
-    return {
-      credentials: {}
-    };
-  },
-  methods: {
-    // get actions and getters from vuex state model
-    ...mapActions("user", ["userLogin"]),
+      isFormPristine() {
+        return Object.keys(this.fields).some(key => this.fields[key].pristine);
+      }
+    },
+    data() {
+      return {
+        credentials: {}
+      };
+    },
+    methods: {
+      // get actions and getters from vuex state model
+      ...mapActions("user", ["userLogin"]),
 
-    // methods for this component
-    async doLogin() {
-      try {
-        let user = await this.userLogin(this.credentials);
+      // methods for this component
+      async doLogin() {
+        try {
+          let user = await this.userLogin(this.credentials);
 
-        if (user === false) {
-          console.log(this.authError().err.message);
-          this.presentToastWithOptions(this.authError().err.message);
-        } else {
-          this.presentToastWithOptions("Logged In Successfully");
-          this.$router.push("home");
+          if (user === false) {
+            console.log(this.authError().err.message);
+            this.presentToastWithOptions(this.authError().err.message);
+          } else {
+            this.presentToastWithOptions("Logged In Successfully");
+            this.$router.push("home");
+          }
+        } catch (e) {}
+      },
+      doCreateAccount() {
+        //console.log(this.credentials);
+        this.$router.push("create-account");
+      },
+      async presentToastWithOptions(_message) {
+        const toast = await this.$ionic.toastController.create({
+          message: _message,
+          showCloseButton: true,
+          position: "bottom",
+          closeButtonText: "Done",
+          duration: 2000
+        });
+        return await toast.present();
+      },
+
+      async doSocialMediaLogin(_value) {
+        const alert = await this.$ionic.alertController.create({
+          header: "Not Implememted Yet",
+          message: `This is where login using ${_value} will happen`,
+          buttons: ["OK"]
+        });
+
+        await alert.present();
+      },
+      async openModal() {
+        let modal = await this.$ionic.modalController.create({
+          component: ForgotPasswordModal,
+          componentProps: {}
+        });
+
+        // show the modal
+        await modal.present();
+
+        // wait to see if i get a response
+        let {
+          data: { success, noteInfo }
+        } = await modal.onDidDismiss();
+
+        // only on success
+        success && alert(JSON.stringify(noteInfo));
+        if (success) {
+          this.addTruckNote(noteInfo);
         }
-      } catch (e) {}
+      }
     },
-    doCreateAccount() {
-      //console.log(this.credentials);
-      this.$router.push("create-account");
-    },
-    async presentToastWithOptions(_message) {
-      const toast = await this.$ionic.toastController.create({
-        message: _message,
-        showCloseButton: true,
-        position: "bottom",
-        closeButtonText: "Done",
-        duration: 2000
-      });
-      return await toast.present();
+    // LIFECYCLE FUNCTIONS
+    mounted: async function() {
+      if (this.authError) {
+        this.presentToastWithOptions(this.authError.message);
+      }
     }
-  },
-  // LIFECYCLE FUNCTIONS
-  mounted: async function() {}
-};
+  };
 </script>
 <style scoped>
-.help.is-danger {
-  color: #ff3860;
-}
-.help {
-  display: block;
-  font-size: 0.75rem;
-  margin-top: 0.25rem;
-}
+  .help.is-danger {
+    color: #ff3860;
+  }
+  .help {
+    display: block;
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+  }
 </style>
 
   

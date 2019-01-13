@@ -17,7 +17,7 @@ export default new VueRouter({
   // mode: "history",
   // base: process.env.BASE_URL,
   routes: [
-    { path: "/", redirect: "/home" },
+    { path: "/", redirect: "/login" },
     {
       path: "/login",
       name: "login",
@@ -37,8 +37,8 @@ export default new VueRouter({
       name: "home",
       component: () =>
         import(/* webpackChunkName: "home" */ "@/components/Home.vue"),
-      props: true
-      //beforeEnter: privateRoute
+      props: true,
+      beforeEnter: privateRoute
     },
     {
       path: "/home-detail",
