@@ -41,12 +41,14 @@ export default {
         let user = await this.userLogout();
         if (user === false) {
           console.log(this.authError().err.message);
-          this.presentToastWithOptions(this.authError().err.message);
+          this.presentToastWithOptions(this.authError.err.message);
         } else {
           this.presentToastWithOptions("Logged Out Successfully");
           this.$router.push("home");
         }
-      } catch (e) {}
+      } catch (e) {
+        this.presentToastWithOptions(this.authError.err.message);
+      }
     },
     async presentAlert() {
       const alert = await this.$ionic.alertController.create({
