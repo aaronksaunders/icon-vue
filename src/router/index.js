@@ -17,7 +17,7 @@ export default new VueRouter({
   // mode: "history",
   // base: process.env.BASE_URL,
   routes: [
-    { path: "/", redirect: "/login" },
+    { path: "/", redirect: "/home" },
     {
       path: "/login",
       name: "login",
@@ -45,8 +45,8 @@ export default new VueRouter({
       name: "home-detail",
       component: () =>
         import(/* webpackChunkName: "home-detail" */ "@/components/HomeDetail.vue"),
-      props: true
-      //beforeEnter: privateRoute
+      props: true,
+      beforeEnter: privateRoute
     },
     {
       path: "/about",
@@ -56,7 +56,8 @@ export default new VueRouter({
       // which is lazy-loaded when the route is visited.
       component: () =>
         import(/* webpackChunkName: "about" */ "@/components/About.vue"),
-      props: true
+      props: true,
+      beforeEnter: privateRoute
     },
     {
       path: "*",

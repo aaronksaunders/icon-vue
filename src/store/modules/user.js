@@ -42,9 +42,30 @@ export default {
       state.isAuthenticated = true;
       state.loading = false;
       state.error = null;
+      state.user = payload.user;
     },
 
-    // USER LOGIN
+    // USER LOGOUT
+    userLogout(state, payload) {
+      console.log(payload);
+    },
+
+    userLogoutRequest(state, payload) {
+      state.isAuthenticated = true;
+      state.loading = true;
+      state.error = null;
+    },
+
+    userLogoutSuccess(state, payload) {
+      console.log(payload);
+
+      state.isAuthenticated = false;
+      state.loading = false;
+      state.error = null;
+      state.user = null;
+    },
+
+    // USER CREATE ACCOUNT
     createAccount(state, payload) {
       console.log(payload);
     },
@@ -81,7 +102,7 @@ export default {
               photoUrl: user.photoURL
             };
             commit("userLoginSuccess", {
-              isLoggedIn: true
+              user: { ...newUser }
             });
             resolve(newUser);
           } else {
@@ -96,6 +117,36 @@ export default {
         console.log(cc);
         commit("authError", cc);
       });
+    },
+
+    /**
+     *
+     * @param {*} param0
+     * @param {*} payload
+     */
+    userLogout({ commit }, payload) {
+      commit("setLoading", true);
+      commit("authError", {
+        error: null
+      });
+
+      // start the request...
+      commit("userLogoutRequest", payload);
+
+      // MAKE API CALL
+      return firebase
+        .auth()
+        .signOut()
+        .then(user => {
+          // when successful...
+          commit("userLogoutSuccess", payload);
+          return true;
+        })
+        .catch(err => {
+          console.log(err);
+          commit("authError", { err });
+          return false;
+        });
     },
 
     /**
@@ -171,6 +222,9 @@ export default {
     },
     authError: state => {
       return state.error;
+    },
+    currentUser: state => {
+      return state.user;
     }
   }
 };

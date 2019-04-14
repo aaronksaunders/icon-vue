@@ -1,11 +1,12 @@
 <template>
   <ion-app>
-    <menu-left />
-    <router-view />
-    <ion-menu-controller></ion-menu-controller>
-    <ion-modal-controller></ion-modal-controller>
+    <menu-left/>
+    <div class="ion-page" main>
+      <router-view/>
+      <ion-menu-controller></ion-menu-controller>
+      <ion-modal-controller></ion-modal-controller>
+    </div>
   </ion-app>
-
 </template>
 
 
