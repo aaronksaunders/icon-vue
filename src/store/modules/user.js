@@ -169,6 +169,67 @@ export default {
         .signInWithEmailAndPassword(payload.email, payload.password)
         .then(user => {
           // when successful...
+          commit("userLoginSuccess", user);
+          return true;
+        })
+        .catch(err => {
+          console.log(err);
+          commit("authError", { err });
+          return false;
+        });
+    },
+    /**
+     *
+     * @param {*} param0
+     * @param {*} payload
+     */
+    socialMediaLogin({ commit }, payload) {
+      commit("setLoading", true);
+      commit("authError", {
+        error: null
+      });
+
+      // start the request...
+      commit("userLoginRequest", payload);
+
+      var provider = new firebase.auth.FacebookAuthProvider();
+      provider.setCustomParameters({
+        display: "popup"
+      });
+
+      return firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then(function(result) {
+          // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+          var token = result.credential.accessToken;
+          // The signed-in user info.
+          var user = result.user;
+          // ...
+          commit("userLoginSuccess", { ...user, accessToken: token });
+          return true;
+        })
+        .catch(function(error) {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // The email of the user's account used.
+          var email = error.email;
+          // The firebase.auth.AuthCredential type that was used.
+          var credential = error.credential;
+          // ...
+          console.log(error);
+          commit("authError", { err: error });
+          return false;
+        });
+
+      // MAKE API CALL
+      return firebase
+        .auth()
+        .signInWithPopup()
+        .signInWithEmailAndPassword(payload.email, payload.password)
+        .then(user => {
+          // when successful...
           commit("userLoginSuccess", payload);
           return true;
         })
