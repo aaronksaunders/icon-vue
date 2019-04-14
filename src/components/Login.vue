@@ -167,12 +167,14 @@
 
           if (user === false) {
             console.log(this.authError().err.message);
-            this.presentToastWithOptions(this.authError().err.message);
+            this.presentToastWithOptions(this.authError.err.message);
           } else {
             this.presentToastWithOptions("Logged In Successfully");
             this.$router.push("home");
           }
-        } catch (e) {}
+        } catch (e) {
+            this.presentToastWithOptions(this.authError.err.message);
+        }
       },
       doCreateAccount() {
         //console.log(this.credentials);
