@@ -15,7 +15,7 @@
             </ion-button>
           </ion-menu-toggle>
         </ion-buttons>
-        <ion-title>Ionic4 VueJS: Food Truck Saver</ion-title>
+        <ion-title>Ionic-VJS: Food Truck Saver</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content padding>

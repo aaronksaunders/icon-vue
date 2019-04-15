@@ -1,0 +1,15 @@
+{
+  "appId": "com.aks.vuehw",
+  "appName": "vuehw",
+  "bundledWebRuntime": false,
+  "webDir": "dist",
+    "server": {
+      "url": "http://localhost:8080",
+      "allowNavigation": [
+        "example.org",
+        "*.example.org",
+        "192.0.2.1",
+        "mapbox.com"
+      ]
+    }
+}
