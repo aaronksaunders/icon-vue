@@ -4,10 +4,7 @@
       <ion-toolbar color="primary">
         <ion-title>Create Account</ion-title>
         <ion-buttons slot="end">
-          <ion-button
-            clear
-            @click="$router.push('about')"
-          >
+          <ion-button clear @click="$router.push('about')">
             <span>Place Holder</span>
           </ion-button>
         </ion-buttons>
@@ -15,14 +12,10 @@
     </ion-header>
 
     <ion-content padding>
-
       <form novalidate>
         <ion-list>
           <ion-item>
-            <ion-label
-              position="stacked"
-              color="primary"
-            >Username</ion-label>
+            <ion-label position="stacked" color="primary">Username</ion-label>
             <ion-input
               v-validate="'required'"
               data-vv-as="username"
@@ -33,18 +26,14 @@
               spellcheck="false"
               autocapitalize="off"
               required
-            >
-            </ion-input>
+            ></ion-input>
           </ion-item>
           <span
             v-show="errors.has('username')"
             class="help is-danger"
           >{{ errors.first('username') }}</span>
           <ion-item>
-            <ion-label
-              position="stacked"
-              color="primary"
-            >Email</ion-label>
+            <ion-label position="stacked" color="primary">Email</ion-label>
             <ion-input
               v-validate="'email|required'"
               data-vv-as="email"
@@ -55,18 +44,11 @@
               spellcheck="false"
               autocapitalize="off"
               required
-            >
-            </ion-input>
+            ></ion-input>
           </ion-item>
-          <span
-            v-show="errors.has('email')"
-            class="help is-danger"
-          >{{ errors.first('email') }}</span>
+          <span v-show="errors.has('email')" class="help is-danger">{{ errors.first('email') }}</span>
           <ion-item>
-            <ion-label
-              position="stacked"
-              color="primary"
-            >First Name</ion-label>
+            <ion-label position="stacked" color="primary">First Name</ion-label>
             <ion-input
               v-validate="'required'"
               data-vv-as="firstName"
@@ -77,8 +59,7 @@
               spellcheck="false"
               autocapitalize="off"
               required
-            >
-            </ion-input>
+            ></ion-input>
           </ion-item>
           <span
             v-show="errors.has('firstName')"
@@ -86,10 +67,7 @@
           >{{ errors.first('firstName') }}</span>
 
           <ion-item>
-            <ion-label
-              position="stacked"
-              color="primary"
-            >Last Name</ion-label>
+            <ion-label position="stacked" color="primary">Last Name</ion-label>
             <ion-input
               v-validate="'required'"
               data-vv-as="lastName"
@@ -100,8 +78,7 @@
               spellcheck="false"
               autocapitalize="off"
               required
-            >
-            </ion-input>
+            ></ion-input>
           </ion-item>
           <span
             v-show="errors.has('lastName')"
@@ -109,10 +86,7 @@
           >{{ errors.first('lastName') }}</span>
 
           <ion-item>
-            <ion-label
-              position="stacked"
-              color="primary"
-            >BirthDate</ion-label>
+            <ion-label position="stacked" color="primary">BirthDate</ion-label>
             <ion-datetime
               v-validate="'required'"
               data-vv-as="birthDate"
@@ -130,10 +104,7 @@
           >{{ errors.first('birthDate') }}</span>
 
           <ion-item>
-            <ion-label
-              position="stacked"
-              color="primary"
-            >Password</ion-label>
+            <ion-label position="stacked" color="primary">Password</ion-label>
             <ion-input
               v-validate="'required'"
               data-vv-as="password1"
@@ -142,19 +113,15 @@
               name="password1"
               type="password"
               required
-            >
-            </ion-input>
+            ></ion-input>
           </ion-item>
-         <span
+          <span
             v-show="errors.has('password1')"
             class="help is-danger"
           >{{ errors.first('password1') }}</span>
 
           <ion-item>
-            <ion-label
-              position="stacked"
-              color="primary"
-            >Repeat Password</ion-label>
+            <ion-label position="stacked" color="primary">Repeat Password</ion-label>
             <ion-input
               v-validate="'required'"
               data-vv-as="password2"
@@ -163,100 +130,112 @@
               name="password2"
               type="password"
               required
-            >
-            </ion-input>
+            ></ion-input>
           </ion-item>
-         <span
+          <span
             v-show="errors.has('password2')"
             class="help is-danger"
           >{{ errors.first('password2') }}</span>
-
         </ion-list>
 
         <ion-row responsive-sm>
           <ion-col>
-            <ion-button
-              @click="doCreateAccount()"
-              expand="block"
-            >Save</ion-button>
+            <ion-button @click="doCreateAccount()" expand="block">Save</ion-button>
           </ion-col>
           <ion-col>
-            <ion-button
-              @click="doGoBack()"
-              color="light"
-              expand="block"
-            >Cancel</ion-button>
+            <ion-button @click="doGoBack()" color="light" expand="block">Cancel</ion-button>
           </ion-col>
         </ion-row>
       </form>
     </ion-content>
     <!-- <ul>
       <li v-for="error in errors.all()">{{ error }}</li>
-    </ul> -->
+    </ul>-->
   </div>
 </template>
 
 <script>
-  import { mapActions, mapGetters } from "vuex";
-  import moment from "moment";
-  export default {
-    name: "CreateAccount",
-    props: {
-      msg: String
+import { mapActions, mapGetters } from "vuex";
+import moment from "moment";
+export default {
+  name: "CreateAccount",
+  props: {
+    msg: String
+  },
+  computed: {
+    ...mapGetters("user", ["authError"]),
+    calcAge() {},
+    isFormDirty() {
+      return Object.keys(this.fields).some(key => this.fields[key].dirty);
     },
-    computed: {
-      ...mapGetters("user", ["authError"]),
-      calcAge() {},
-      isFormDirty() {
-        return Object.keys(this.fields).some(key => this.fields[key].dirty);
-      },
 
-      isFormPristine() {
-        return Object.keys(this.fields).some(key => this.fields[key].pristine);
-      }
-    },
-    data() {
-      return {
-        userInfo: {}
-      };
-    },
-    methods: {
-      ...mapActions("user", ["createAccount"]),
-      moment: function() {
-        return moment();
-      },
-      td(v) {
-        let date = `${v.month.value - v.day.value - v.year.value}`;
-        console.log(this.moment().diff(date, "years"));
-        return date;
-      },
-      doCreateAccount() {
-        this.$validator.validate().then(result => {
-          if (!result) {
-            // do stuff if not valid.
-            console.log(this.userInfo);
-            console.log(this.userInfo);
-          } else {
-            this.createAccount(this.userInfo);
-          }
-        });
-      },
-      doGoBack() {
-        //console.log(this.userInfo);
-        this.$router.go(-1);
-      }
+    isFormPristine() {
+      return Object.keys(this.fields).some(key => this.fields[key].pristine);
     }
-  };
+  },
+  data() {
+    return {
+      userInfo: {}
+    };
+  },
+  methods: {
+    ...mapActions("user", ["createAccount"]),
+    moment: function() {
+      return moment();
+    },
+    td(v) {
+      let date = `${v.month.value - v.day.value - v.year.value}`;
+      console.log(this.moment().diff(date, "years"));
+      return date;
+    },
+    async doCreateAccount() {
+      let isValid = this.$validator.validate();
+
+      if (!isValid || this.userInfo.password1 !== this.userInfo.password2) {
+        // do stuff if not valid.
+        console.log(this.userInfo);
+        console.log(this.userInfo);
+
+        this.presentToastWithOptions("Passwords Don't Match");
+      } else {
+        let result = await this.createAccount(this.userInfo);
+        if (!result) {
+          console.log(this.authError.err.message);
+          this.presentToastWithOptions(this.authError.err.message);
+        } else {
+          this.$router.push("home");
+        }
+      }
+    },
+    doGoBack() {
+      //console.log(this.userInfo);
+      this.$router.go(-1);
+    },
+    /**
+     *
+     */
+    async presentToastWithOptions(_message) {
+      const toast = await this.$ionic.toastController.create({
+        message: _message,
+        showCloseButton: true,
+        position: "bottom",
+        closeButtonText: "Done",
+        duration: 2000
+      });
+      return await toast.present();
+    }
+  }
+};
 </script>
   
 <style scoped>
-  .help.is-danger {
-    color: #ff3860;
-  }
-  .help {
-    display: block;
-    font-size: 0.75rem;
-    margin-top: 0.25rem;
-  }
+.help.is-danger {
+  color: #ff3860;
+}
+.help {
+  display: block;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+}
 </style>
 
