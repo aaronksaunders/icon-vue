@@ -257,7 +257,7 @@ export default {
         // MAKE API CALL
         return firebase
           .auth()
-          .createUserWithEmailAndPassword(payload.email, payload.password)
+          .createUserWithEmailAndPassword(payload.email, payload.password1)
           .then(user => {
             // when successful...
             commit("createAccountSuccess", payload);
@@ -268,9 +268,10 @@ export default {
             commit("authError", { err });
             return false;
           });
-      } catch (e) {
-        console.log(e);
-        commit("authError", { e });
+      } catch (err) {
+        console.log(err);
+        commit("authError", { err });
+        return false;
       }
     }
   },

@@ -124,7 +124,7 @@ export default {
         let user = await this.userLogin(this.credentials);
 
         if (user === false) {
-          console.log(this.authError().err.message);
+          console.log(this.authError.err.message);
           this.presentToastWithOptions(this.authError.err.message);
         } else {
           this.presentToastWithOptions("Logged In Successfully");
@@ -161,7 +161,7 @@ export default {
         let user = await this.socialMediaLogin(_value);
 
         if (user === false) {
-          console.log(this.authError().err.message);
+          console.log(this.authError.err.message);
           this.presentToastWithOptions(this.authError.err.message);
         } else {
           debugger;
