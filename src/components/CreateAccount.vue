@@ -188,41 +188,20 @@ export default {
       console.log(this.moment().diff(date, "years"));
       return date;
     },
-    async doCreateAccount() {
-      let isValid = this.$validator.validate();
-
-      if (!isValid || this.userInfo.password1 !== this.userInfo.password2) {
-        // do stuff if not valid.
-        console.log(this.userInfo);
-        console.log(this.userInfo);
-
-        this.presentToastWithOptions("Passwords Don't Match");
-      } else {
-        let result = await this.createAccount(this.userInfo);
+    doCreateAccount() {
+      this.$validator.validate().then(result => {
         if (!result) {
-          console.log(this.authError.err.message);
-          this.presentToastWithOptions(this.authError.err.message);
+          // do stuff if not valid.
+          console.log(this.userInfo);
+          console.log(this.userInfo);
         } else {
-          this.$router.push("home");
+          this.createAccount(this.userInfo);
         }
-      }
+      });
     },
     doGoBack() {
       //console.log(this.userInfo);
       this.$router.go(-1);
-    },
-    /**
-     *
-     */
-    async presentToastWithOptions(_message) {
-      const toast = await this.$ionic.toastController.create({
-        message: _message,
-        showCloseButton: true,
-        position: "bottom",
-        closeButtonText: "Done",
-        duration: 2000
-      });
-      return await toast.present();
     }
   }
 };
