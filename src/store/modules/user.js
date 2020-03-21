@@ -10,7 +10,8 @@ export default {
     isAuthenticated: false,
     loading: false,
     error: null,
-    user: null
+    user: null,
+    authChecked : false
   },
   //
   // MUTATIONS
@@ -18,6 +19,9 @@ export default {
   mutations: {
     setLoading(state, payload) {
       state.loading = payload;
+    },
+    authChecked(state, payload) {
+      state.authChecked = payload.authChecked;
     },
 
     authError(state, payload) {
@@ -93,6 +97,11 @@ export default {
         // Setup Firebase onAuthStateChanged handler
         // https://firebase.google.com/docs/reference/js/firebase.auth.Auth#onAuthStateChanged
         firebase.auth().onAuthStateChanged(user => {
+
+          commit("authChecked", {
+            authChecked: true
+          });
+          
           if (user) {
             const newUser = {
               id: user.uid,

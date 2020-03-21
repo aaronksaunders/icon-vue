@@ -1,5 +1,5 @@
 <template>
-  <ion-menu>
+  <ion-menu  :disabled="!showMenu">
     <ion-header>
       <ion-toolbar color="primary">
         <ion-title>Menu</ion-title>
@@ -42,7 +42,7 @@
   export default {
     name: "MenuLeft",
     props: {
-      msg: String
+      showMenu: Boolean
     }
   };
 </script>

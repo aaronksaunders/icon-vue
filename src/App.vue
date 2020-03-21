@@ -1,8 +1,6 @@
 <template>
   <ion-app>
-    <div v-if="hasUser">
-    <menu-left/>
-    </div>
+    <menu-left :showMenu="hasUser === true"/>
     <div class="ion-page" main>
       <ion-vue-router></ion-vue-router>
       <ion-menu-controller></ion-menu-controller>
@@ -23,6 +21,7 @@ export default {
   components: { MenuLeft },
   computed: {
     hasUser() {
+      debugger;
       return this.$store.state.user.isAuthenticated 
     }
   },
