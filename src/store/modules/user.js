@@ -93,7 +93,6 @@ export default {
         // Setup Firebase onAuthStateChanged handler
         // https://firebase.google.com/docs/reference/js/firebase.auth.Auth#onAuthStateChanged
         firebase.auth().onAuthStateChanged(user => {
-          debugger;
           if (user) {
             const newUser = {
               id: user.uid,

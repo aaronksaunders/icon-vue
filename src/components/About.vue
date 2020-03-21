@@ -3,12 +3,12 @@
     <ion-header>
       <ion-toolbar color="primary">
         <ion-buttons slot="start">
-          <ion-menu-toggle>
+          <ion-menu-toggle v-if="currentUser">
             <ion-button>
               <ion-icon slot="icon-only" name="menu"></ion-icon>
             </ion-button>
           </ion-menu-toggle>
-          <!-- <ion-back-button text="" default-href="/" @click="$router.go(-1)" /> -->
+          <ion-back-button v-if="!currentUser" text default-href="/" @click="$router.go(-1)" />
         </ion-buttons>
         <ion-title>Ionic4 VueJS: About</ion-title>
       </ion-toolbar>
@@ -30,7 +30,7 @@ export default {
     msg: String
   },
   computed: {
-    ...mapGetters("user", ["authError", "currentUser"])
+    ...mapGetters("user", ["authError", "currentUser"]),
   },
   methods: {
     // get actions and getters from vuex state model

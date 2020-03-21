@@ -1,8 +1,10 @@
 <template>
   <ion-app>
+    <div v-if="hasUser">
     <menu-left/>
+    </div>
     <div class="ion-page" main>
-      <router-view/>
+      <ion-vue-router></ion-vue-router>
       <ion-menu-controller></ion-menu-controller>
       <ion-modal-controller></ion-modal-controller>
     </div>
@@ -15,9 +17,15 @@
 
 <script>
 import MenuLeft from "./components/menus/MenuLeft";
+import store from "./store";
 export default {
   name: "app",
-  components: { MenuLeft }
+  components: { MenuLeft },
+  computed: {
+    hasUser() {
+      return this.$store.state.user.isAuthenticated 
+    }
+  },
 };
 </script>
 

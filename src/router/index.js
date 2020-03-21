@@ -1,8 +1,8 @@
 import Vue from "vue";
-import VueRouter from "vue-router";
 import store from "../store";
 
-Vue.use(VueRouter);
+import { IonicVueRouter } from "@ionic/vue";
+Vue.use(IonicVueRouter);
 
 const privateRoute = (to, from, next) => {
   console.log("isAuthenticated:" + store.state.user.isAuthenticated);
@@ -13,9 +13,9 @@ const privateRoute = (to, from, next) => {
   }
 };
 
-export default new VueRouter({
-  // mode: "history",
-  // base: process.env.BASE_URL,
+export default new IonicVueRouter({
+  mode: "history",
+  base: process.env.BASE_URL,
   routes: [
     { path: "/", redirect: "/home" },
     {
@@ -57,7 +57,7 @@ export default new VueRouter({
       component: () =>
         import(/* webpackChunkName: "about" */ "@/components/About.vue"),
       props: true,
-      beforeEnter: privateRoute
+      // beforeEnter: privateRoute
     },
     {
       path: "*",

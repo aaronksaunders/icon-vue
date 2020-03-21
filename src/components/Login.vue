@@ -164,13 +164,11 @@ export default {
           console.log(this.authError.err.message);
           this.presentToastWithOptions(this.authError.err.message);
         } else {
-          debugger;
           this.presentToastWithOptions("Logged In Successfully");
           this.$router.push("home");
         }
 
       } catch (e) {
-        debugger;
         this.presentToastWithOptions(this.authError.err.message);
       }
     },
