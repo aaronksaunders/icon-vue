@@ -1,4 +1,4 @@
-export const members = [
+const members = [
   {
     c1: [
       {
@@ -1935,3 +1935,5 @@ export const members = [
     ]
   }
 ];
+
+export default members;
