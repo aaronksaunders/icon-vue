@@ -1,4 +1,5 @@
 # MMP Icon Mobile App
+>PLEASE SEE UPDATED VUE CONTENT ON MY YOUTTUBE CHANNEL: https://www.youtube.com/playlist?list=PL2PY2-9rsgl2uKW0DB5FJ-YRCAG-JuSWN
 
 ### Other Ionic Vue Samples
 - https://github.com/aaronksaunders/ionic4-vue-tabs
